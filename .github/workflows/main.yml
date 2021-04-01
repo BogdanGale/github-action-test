@@ -19,7 +19,8 @@ jobs:
               repo
             });
             const { data } = tags;
-            const lastTagName = data.length > 0 ? data[data.length-1].name : "2.0.0";
+            console.log(data)
+            const lastTagName = data.length > 0 ? data[0].name : "2.0.0";
             const semver = lastTagName.split('.');
             github.git.createRef({
               owner,
