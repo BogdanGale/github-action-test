@@ -15,7 +15,7 @@ jobs:
           console.log(github.repos.listTags({
             owner: context.repo.owner,
             repo: context.repo.repo
-          })
+          }))
           /* github.git.createRef({
             owner: context.repo.owner,
             repo: context.repo.repo,
