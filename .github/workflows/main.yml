@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v3
-      with:
-        github-token: ${{github.token}}
-        script: |
-          console.log("test", Date.now())
-          
+        with:
+          github-token: ${{github.token}}
+          script: |
+            console.log("test", Date.now())
+
