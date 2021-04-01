@@ -11,4 +11,11 @@ jobs:
       uses: actions/github-script@v3
       with:
         github-token: ${{github.token}}
-        script: console.log(context)
+        script: |
+          console.log(context)
+          github.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: "refs/tags/tagname",
+            sha: context.sha
+          })
