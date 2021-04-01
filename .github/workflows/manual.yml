@@ -16,10 +16,13 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo
           })
-          console.log(tags)
-          /* github.git.createRef({
+          const { data } = tags;
+          const lastTagName = data?.[0]?.name || 2.0.0;
+          let semver = lastTagName.split('.');
+          semver[1]++;
+          github.git.createRef({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            ref: "refs/tags/tagname",
+            ref: `refs/tags/${semver.join('.')}`,
             sha: context.sha
-          }) */
+          });
