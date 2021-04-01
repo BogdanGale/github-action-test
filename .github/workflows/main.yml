@@ -24,7 +24,7 @@ jobs:
             github.git.createRef({
               owner,
               repo,
-              ref: `refs/tags/2.${semver[1] + 1)}.0`,
+              ref: `refs/tags/2.${semver[1] + 1}.0`,
               sha: context.sha
             });
 
