@@ -1,0 +1,14 @@
+# This is a basic workflow that is manually triggered
+
+name: Manual workflow
+on:
+  workflow_dispatch:
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create tag
+    - uses: actions/github-script@v3
+      with:
+        github-token: ${{github.token}}
+        script: console.log(context)
