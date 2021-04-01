@@ -12,12 +12,7 @@ jobs:
       with:
         github-token: ${{github.token}}
         script: |
-          console.log(github.git.getTag({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            ref: "refs/tags/tagname",
-            sha: context.sha
-          }))
+          console.log(github.git.listTags())
           /* github.git.createRef({
             owner: context.repo.owner,
             repo: context.repo.repo,
