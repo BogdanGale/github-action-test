@@ -13,14 +13,15 @@ jobs:
         with:
           github-token: ${{github.token}}
           script: |
-           const getWeekNumber = () => {
+            Date.prototype.getWeekNumber = function () {
               var d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
               var dayNum = d.getUTCDay() || 7;
               d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-              var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-              return Math.ceil((((d - yearStart) / 86400000) + 1)/7)
+              var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+              return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
             };
-            if (getWeekNumber() % 2 === 0) {
+            let newDate = new Date();
+            if (newDate.getWeekNumber() % 2 === 0) {
               const { owner, repo } = context.repo;
               const tags = await github.repos.listTags({
                 owner,
