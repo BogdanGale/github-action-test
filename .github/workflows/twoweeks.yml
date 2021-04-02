@@ -27,16 +27,11 @@ jobs:
                 owner,
                 repo
               });
-              const { data } = tags;
-              const lastTagName = data.length > 0 ? data[data.length-1].name;
-              const semver = lastTagName.split('.');
-              github.git.createRef({
-                owner,
-                repo,
-                ref: `refs/tags/2.${Number(semver[1]) + 1}.0`,
-                sha: context.sha
-              });
-            }
-
-
-
+            const { data } = tags;
+            const lastTagName = data.length > 0 ? data[data.length-1].name;
+            const semver = lastTagName.split('.');
+            github.repos.createRelease({
+              owner,
+              repo,
+              tag_name: `2.${Number(semver[1]) + 1}.0`,
+            });
