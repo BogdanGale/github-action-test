@@ -20,6 +20,7 @@ jobs:
           const { data } = tags;
           const lastTagName = data.length > 0 ? data[0].name : "2.0.0";
           const semver = lastTagName.split('.');
+          console.log(data, lastTagName, semver, Number(semver[1]) + 1);
           github.repos.createRelease({
             owner,
             repo,
