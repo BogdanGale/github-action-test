@@ -18,12 +18,10 @@ jobs:
               repo
             });
             const { data } = tags;
-            console.log(data)
             const lastTagName = data.length > 0 ? data[0].name : "2.0.0";
             const semver = lastTagName.split('.');
-            github.git.createRef({
+            github.repos.createRelease({
               owner,
               repo,
-              ref: `refs/tags/2.${Number(semver[1]) + 1}.0`,
-              sha: context.sha
+              tag_name: `2.${Number(semver[1]) + 1}.0`,
             });
