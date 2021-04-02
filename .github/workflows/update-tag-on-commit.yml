@@ -29,4 +29,5 @@ jobs:
         with:
           # Required for permission to tag the repo.
           github_token: ${{github.token}}
+          tag_prefix: ""
 
