@@ -2,7 +2,7 @@ name: Update tag every two weeks
 
 on:
   schedule:
-    - cron: "0 8 * * 1"
+    - cron: "0 9 * * 1"
     
 jobs:
   tag:
@@ -14,24 +14,30 @@ jobs:
           github-token: ${{github.token}}
           script: |
             Date.prototype.getWeekNumber = function () {
-              var d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
-              var dayNum = d.getUTCDay() || 7;
+              let d = new Date(
+                Date.UTC(this.getFullYear(), this.getMonth(), this.getDate())
+              );
+              const dayNum = d.getUTCDay() || 7;
               d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-              var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-              return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+              const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+              return Math.ceil(((d - yearStart) / 86400000 + 1) / 7)
             };
-            let newDate = new Date();
+            const newDate = new Date();
             if (newDate.getWeekNumber() % 2 === 0) {
               const { owner, repo } = context.repo;
               const tags = await github.repos.listTags({
                 owner,
-                repo
+                repo,
               });
-            const { data } = tags;
-            const lastTagName = data.length > 0 ? data[data.length-1].name;
-            const semver = lastTagName.split('.');
-            github.repos.createRelease({
-              owner,
-              repo,
-              tag_name: `2.${Number(semver[1]) + 1}.0`,
-            });
+              const { data } = tags;
+              const lastTagName = data.length > 0 ? data[0].name : "2.0.0";
+              const semver = lastTagName.split(".");
+              github.repos.createRelease({
+                owner,
+                repo,
+                tag_name: `2.${Number(semver[1]) + 1}.0`,
+              });
+            }
+            else {
+              console.log("No releases this week")
+            }
