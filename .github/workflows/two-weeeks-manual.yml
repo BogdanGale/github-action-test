@@ -19,7 +19,7 @@ jobs:
             require(`${process.env.GITHUB_WORKSPACE}/node_modules/moment/locale/ro`)
             moment.locale('ro')
             const weekNumber = moment().week()
-            if (weekNumber % 2 === 0) {
+            if (weekNumber % 2 !== 0) {
                 const { owner, repo } = context.repo
                 const { data } = await github.repos.listTags({
                     owner,
