@@ -15,7 +15,7 @@ jobs:
         with:
           github-token: ${{github.token}}
           script: |
-            const semverInc = require('semver/functions/inc')
+            const semverInc = require(`${process.env.GITHUB_WORKSPACE}/node_modules/semver/functions/inc`)
             const moment = require(`${process.env.GITHUB_WORKSPACE}/node_modules/moment`)
             require(`${process.env.GITHUB_WORKSPACE}/node_modules/moment/locale/ro`)
             moment.locale('ro')
