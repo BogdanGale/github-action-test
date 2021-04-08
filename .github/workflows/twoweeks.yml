@@ -2,42 +2,40 @@ name: Update tag every two weeks
 
 on:
   schedule:
-    - cron: "0 11 * * 1"
+    - cron: "0 0 * * 1"
     
 jobs:
   tag:
-    name: Tag
+    name: Increment tag on new sprint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v3
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: npm install moment semver
+      - name: Update tag
+        uses: actions/github-script@v3
         with:
           github-token: ${{github.token}}
           script: |
-            Date.prototype.getWeekNumber = function () {
-              let d = new Date(
-                Date.UTC(this.getFullYear(), this.getMonth(), this.getDate())
-              );
-              const dayNum = d.getUTCDay() || 7;
-              d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-              const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-              return Math.ceil(((d - yearStart) / 86400000 + 1) / 7)
-            };
-            const newDate = new Date();
-            if (newDate.getWeekNumber() % 2 === 0) {
-              const { owner, repo } = context.repo;
-              const tags = await github.repos.listTags({
-                owner,
-                repo,
-              });
-              const { data } = tags;
-              const lastTagName = data.length > 0 ? data[0].name : "2.0.0";
-              const semver = lastTagName.split(".");
-              github.repos.createRelease({
-                owner,
-                repo,
-                tag_name: `2.${Number(semver[1]) + 1}.0`,
-              });
-            }
-            else {
-              console.log("No releases this week")
+            const semverInc = require(`${process.env.GITHUB_WORKSPACE}/node_modules/semver/functions/inc`)
+            const moment = require(`${process.env.GITHUB_WORKSPACE}/node_modules/moment`)
+            require(`${process.env.GITHUB_WORKSPACE}/node_modules/moment/locale/ro`)
+            moment.locale('ro')
+            const weekNumber = moment().week()
+            if (weekNumber % 2 === 0) {
+                const { owner, repo } = context.repo
+                const { data } = await github.repos.listTags({
+                    owner,
+                    repo,
+                })
+                const { name } = data[0]
+                github.repos.createRelease({
+                    owner,
+                    repo,
+                    tag_name: semverInc(name, 'minor'),
+                })
+            } else {
+                console.log('No releases this week')
             }
