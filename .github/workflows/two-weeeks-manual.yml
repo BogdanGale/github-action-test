@@ -25,7 +25,7 @@ jobs:
                     owner,
                     repo,
                 })
-                const { name } = data?.[0]
+                const { name } = data[0]
                 const semver = name.split('.')
                 semver[1] = Number(semver[1] + 1)
                 github.repos.createRelease({
@@ -36,4 +36,5 @@ jobs:
             } else {
                 console.log('No releases this week')
             }
+
 
