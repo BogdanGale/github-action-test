@@ -9,12 +9,13 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      - run: npm install moment
+      - run: npm install moment semver
       - name: Create tag
         uses: actions/github-script@v3
         with:
           github-token: ${{github.token}}
           script: |
+            const semverInc = require('semver/functions/inc')
             const moment = require(`${process.env.GITHUB_WORKSPACE}/node_modules/moment`)
             require(`${process.env.GITHUB_WORKSPACE}/node_modules/moment/locale/ro`)
             moment.locale('ro')
@@ -26,13 +27,10 @@ jobs:
                     repo,
                 })
                 const { name } = data[0]
-                const semver = name.split('.')
-                semver[1] = Number(semver[1]) + 1
-                semver[2] = 0
                 github.repos.createRelease({
                     owner,
                     repo,
-                    tag_name: semver.join('.'),
+                    tag_name: semverInc(name, 'minor'),
                 })
             } else {
                 console.log('No releases this week')
