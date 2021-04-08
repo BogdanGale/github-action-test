@@ -16,7 +16,7 @@ jobs:
           github-token: ${{github.token}}
           script: |
             const moment = require('moment');
-            import 'moment/locale/ro';
+            require('moment/locale/ro');
             moment.locale('ro');
             const weekNumber = moment().week();
             if (weekNumber % 2 === 0) {
