@@ -1,4 +1,4 @@
-name: Update tag every two weeks
+name: Increment tag on new sprint
 
 on:
   schedule:
@@ -6,7 +6,6 @@ on:
     
 jobs:
   tag:
-    name: Increment tag on new sprint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
