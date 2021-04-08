@@ -2,7 +2,7 @@ name: Two weeks manual workflow
 on:
   workflow_dispatch:
 jobs:
-  two-weeks-release:
+  update-tag:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -10,7 +10,7 @@ jobs:
         with:
           node-version: 14
       - run: npm install moment semver
-      - name: Create tag
+      - name: Update tag
         uses: actions/github-script@v3
         with:
           github-token: ${{github.token}}
@@ -35,5 +35,3 @@ jobs:
             } else {
                 console.log('No releases this week')
             }
-
-
