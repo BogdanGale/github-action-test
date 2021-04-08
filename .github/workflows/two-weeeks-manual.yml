@@ -27,7 +27,8 @@ jobs:
                 })
                 const { name } = data[0]
                 const semver = name.split('.')
-                semver[1] = Number(semver[1] + 1)
+                semver[1] = Number(semver[1]) + 1
+                semver[2] = 0
                 github.repos.createRelease({
                     owner,
                     repo,
