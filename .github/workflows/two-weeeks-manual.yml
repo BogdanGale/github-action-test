@@ -16,24 +16,24 @@ jobs:
           github-token: ${{github.token}}
           script: |
             const moment = require(`${process.env.GITHUB_WORKSPACE}/node_modules/moment`)
-            require(`${process.env.GITHUB_WORKSPACE}/node_modules/moment/locale/ro`);
-            moment.locale('ro');
-            const weekNumber = moment().week();
+            require(`${process.env.GITHUB_WORKSPACE}/node_modules/moment/locale/ro`)
+            moment.locale('ro')
+            const weekNumber = moment().week()
             if (weekNumber % 2 === 0) {
-              const { owner, repo } = context.repo;
-              const tags = await github.repos.listTags({
-                owner,
-                repo,
-              });
-              const { data } = tags;
-              const lastTagName = data.length > 0 ? data[0].name : "2.0.0";
-              const semver = lastTagName.split(".");
-              github.repos.createRelease({
-                owner,
-                repo,
-                tag_name: `2.${Number(semver[1]) + 1}.0`,
-              });
+                const { owner, repo } = context.repo
+                const { data } = await github.repos.listTags({
+                    owner,
+                    repo,
+                })
+                const { name } = data?.[0]
+                const semver = name.split('.')
+                semver[1] = Number(semver[1] + 1)
+                github.repos.createRelease({
+                    owner,
+                    repo,
+                    tag_name: semver.join('.'),
+                })
+            } else {
+                console.log('No releases this week')
             }
-            else {
-              console.log("No releases this week")
-            }
+
