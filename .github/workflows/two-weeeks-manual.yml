@@ -30,7 +30,7 @@ jobs:
                 github.repos.createRelease({
                     owner,
                     repo,
-                    tag_name: semverInc(name, 'minor'),
+                    tag_name: `v${semverInc(name, 'minor')}`,
                 })
             } else {
                 console.log('No releases this week')
