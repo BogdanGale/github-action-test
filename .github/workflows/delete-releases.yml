@@ -15,10 +15,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs a single command using the runners shell
-    - name: Send greeting
-      uses: dev-drprasad/delete-older-releases@v0.2.0
-      with:
-        keep_latest: 0
-        delete_tags: true
+    - name: Delete tag
+      uses: dev-drprasad/delete-tag-and-release@v0.2.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
