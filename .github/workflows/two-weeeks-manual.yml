@@ -22,6 +22,11 @@ jobs:
             const weekNumber = moment().week()
             if (weekNumber % 2 === 0) {
                 const { owner, repo } = context.repo
+                const latest = await github.repos.getLatestRelease({
+                    owner,
+                    repo,
+                })
+                console.log(latest)
                 const { tag_name } = await github.repos.getLatestRelease({
                     owner,
                     repo,
