@@ -9,7 +9,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      - run: yarn add moment semver
+      - run: yarn add moment@2.29.1 semver@7.3.5
       - name: Update tag
         uses: actions/github-script@v3
         with:
@@ -22,15 +22,14 @@ jobs:
             const weekNumber = moment().week()
             if (weekNumber % 2 === 0) {
                 const { owner, repo } = context.repo
-                const { data } = await github.repos.listTags({
+                const { tag_name } = await github.repos.getLatestRelease({
                     owner,
                     repo,
                 })
-                const { name } = data[0]
                 github.repos.createRelease({
                     owner,
                     repo,
-                    tag_name: `v${semverInc(name, 'minor')}`,
+                    tag_name: `v${semverInc(tag_name, 'minor')}`,
                 })
             } else {
                 console.log('No releases this week')
