@@ -26,10 +26,12 @@ jobs:
                     owner,
                     repo,
                 })
+                const updatedTagName = `v${semverInc(tag_name, 'minor')}`
                 github.repos.createRelease({
                     owner,
                     repo,
-                    tag_name: `v${semverInc(tag_name, 'minor')}`,
+                    tag_name: updatedTagName,
+                    name: updatedTagName
                 })
             } else {
                 console.log('No releases this week')
