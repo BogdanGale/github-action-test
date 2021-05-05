@@ -9,7 +9,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      - run: yarn add moment@2.29.1 semver@7.3.5
+      - run: yarn add moment@2.29.1 semver@7.3.5 -D
       - name: Update tag
         uses: actions/github-script@v3
         with:
