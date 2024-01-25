@@ -2,7 +2,6 @@ name: Release
 on:
   push:
     branches:
-      - features/semantic_release
       - main
 
 permissions:

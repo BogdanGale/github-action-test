@@ -1,5 +1,5 @@
 {
-  "branches": ["features/semantic_release", "main"],
+  "branches": ["main"],
   "plugins": [
     "@semantic-release/github",
     "@semantic-release/exec",
