@@ -25,7 +25,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
-      - name: Install semantic-release
+      - name: Install semantic-release depdencies
         run: npm install semantic-release @semantic-release/exec
       - name: Release
         env:
