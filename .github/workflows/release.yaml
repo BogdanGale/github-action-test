@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - features/semantic_release
+      - main
 
 permissions:
   contents: read # for checkout
