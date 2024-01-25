@@ -1,0 +1,23 @@
+{
+  "branches": ["features/semantic_release", "main"],
+  "plugins": [
+    "@semantic-release/github",
+    "@semantic-release/exec",
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "angular",
+        "releaseRules": [
+          {
+            "type": "feat",
+            "release": "patch"
+          },
+          {
+            "type": "fix",
+            "release": "patch"
+          }
+        ]
+      }
+    ]
+  ]
+}
